@@ -98,14 +98,12 @@ Esto es muy sencillo. Simplemente ejecutamos esto en el onCreate() de la Activid
   //Seteamos la toolbar como Action Bar
   setSupportActionBar(binding.topAppBar)
 ```
-Si ejecutamos la aplicación ahora, veremos nuestra ActionBar con el título de la app, pero sin opciones. Tenemos que inflarlo desde la actividad.
-
 Podríamos recuperar referencias a la barra con el getter correspondiente:
 ```kotlin
   val miActionBar = getSupportActionBar()
 ```
-
-Como ahora es una ActionBar, toda la gestión de este menú a partir de ahora lo haremos siguiendo hooks de la API de Android
+Si ejecutamos la aplicación ahora, veremos nuestra ActionBar con el título de la app, pero sin opciones. Al convertirse en ActionBar tenemos que inflar el menú desde la actividad.
+Toda la gestión de este menú a partir de ahora, seteada como ActionBar, la haremos siguiendo hooks de la API de Android
 
 ## 4. Inflar la Action Bar
 Para inflar la toolbar seteada como ActionBar, usaremos el hook onCreateOptionsMenu:
@@ -116,13 +114,39 @@ Para inflar la toolbar seteada como ActionBar, usaremos el hook onCreateOptionsM
         return true
     }
 ```
+Tras esto las opciones del menú volverán a mostrarse.
+
 
 ## 5. Gestionar nuestra barra con un gráfico de navegación (Navigation UI)
 El Navigation Component nos provee una clase NavigationUI que nos permite gestionar automáticamente la navegación, tal y como está definida
-en el gráfico de navegación, desde nuestros menús. Nos permite:
+en el gráfico de navegación, desde nuestros menús. 
+
+Nos permite:
 - Mostrar el label de los fragmentos del gráfico de navegación como título de cada ventana.
 - Gestionar automáticamente la visibilidad del botón arriba del botón "Up" <img src="https://developer.android.com/static/images/guide/navigation/up-button.png" style="height:1.20em"> de la parte inferior izquierda, para que se muestre en todos los fragmentos no raíz.
 - Vincular nuestros items de menú y los destinos de navegación mediante su id.
+
+
+Si tenemos nuestra ToolBar seteada como actionBar, tenemos que seguir [estos pasos](https://developer.android.com/guide/navigation/integrations/ui#action_bar).
+No debemos olvidarnos de sobreescribir este método:
+```kotlin
+override fun onSupportNavigateUp(): Boolean {
+    val navController = findNavController(R.id.nav_host_fragment)
+    return navController.navigateUp(appBarConfiguration)
+            || super.onSupportNavigateUp()
+}
+```
+Si fuese una ToolBar normal (sin haber ejecutado```setSupporActionBar()```), seguiremos [estos otros pasos](https://developer.android.com/guide/navigation/integrations/ui#create_a_toolbar)
+
+En ambos casos, tendremos que sobreescribir de algún modo el comportamiento al hacer click en los items del menú. Con la ActionBar lo haremos
+en el hook ```onOptionsItemSelected()``` como se indica [aquí](https://developer.android.com/guide/navigation/integrations/ui#Tie-navdrawer):
+
+```kotlin
+override fun onOptionsItemSelected(item: MenuItem): Boolean {
+   val navController = findNavController(R.id.nav_host_fragment)
+   return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
+}
+```
 
 
  
