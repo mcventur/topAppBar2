@@ -8,29 +8,32 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/topAppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="?attr/actionBarSize"
-
             android:background="?attr/colorPrimary"
+
             android:elevation="4dp"
+            android:minHeight="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     </com.google.android.material.appbar.AppBarLayout>
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Bienvenido"
-            android:layout_gravity="center"
-            android:gravity="center"/>
 
-    </androidx.core.widget.NestedScrollView>
+    <!-- Muy importante elm app:layout_behaviour,
+    para que no se monte el contenido del fragmento bajo la barra -->
+    <fragment
+        android:id="@+id/nav_host"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/nav_graph"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
