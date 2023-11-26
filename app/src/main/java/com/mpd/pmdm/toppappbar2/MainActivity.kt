@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.onNavDestinationSelected
+import androidx.navigation.ui.setupWithNavController
 import com.mpd.pmdm.toppappbar2.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,25 +18,21 @@ class MainActivity : AppCompatActivity() {
 
         //La inflo manualmente
         binding.topAppBar.inflateMenu(R.menu.top_menu)
+        //Le asocio un appBarConfiguration para que gestione las etiquetas y el botón arriba
+        val navController = findNavController(R.id.nav_host)
+        val appBarConfiguration = AppBarConfiguration(navController.graph)
+        binding.topAppBar
+            .setupWithNavController(navController, appBarConfiguration)
+
         //Le doy comportamienmto a los items en una función creada por mi
         binding.topAppBar.setOnMenuItemClickListener {
             miMenuNoActionOnClickItem(it)
         }
-
-        //Tampoco la conecto al gráfico de  navegación para manejar el título o el botón arriba
     }
 
     fun miMenuNoActionOnClickItem(item: MenuItem): Boolean {
-
-        return when(item.itemId){
-            R.id.profileFragment -> {
-                findNavController(R.id.nav_host).navigate(R.id.profileFragment)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-
-
+        val navController = findNavController(R.id.nav_host)
+        return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(item)
     }
 
 
