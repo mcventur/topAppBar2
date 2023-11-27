@@ -127,7 +127,7 @@ Nos permite:
 - Vincular nuestros items de menú y los destinos de navegación mediante su id.
 
 
-Si tenemos nuestra ToolBar seteada como actionBar, tenemos que seguir [estos pasos](https://developer.android.com/guide/navigation/integrations/ui#action_bar).
+Si tenemos nuestra ToolBar seteada como actionBar, tenemos que seguir [estos pasos](https://developer.android.com/guide/navigation/integrations/ui#add_a_navigation_drawer).
 No debemos olvidarnos de sobreescribir este método:
 ```kotlin
 override fun onSupportNavigateUp(): Boolean {
