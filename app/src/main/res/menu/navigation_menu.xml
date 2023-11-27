@@ -2,11 +2,30 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/bt_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:icon="@drawable/baseline_bluetooth_24"
-        android:title="Bluetooth"
-        app:showAsAction="always|withText" />
+    <group
+        android:id="@+id/gupo1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visible="true">
+        <item
+            android:id="@+id/item_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/baseline_folder_shared_24"
+            android:title="Documents" />
+    </group>
+    <group
+        android:id="@+id/grupo2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:enabled="true"
+        android:visible="true">
+        <item
+            android:id="@+id/bt_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/baseline_bluetooth_24"
+            android:title="Bluetooth"
+            app:showAsAction="always|withText" />
+    </group>
 </menu>
