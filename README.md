@@ -149,6 +149,61 @@ override fun onOptionsItemSelected(item: MenuItem): Boolean {
 ```
 
 
+# Añadir un menú lateral deslizante
+
+Podemos añadir otro menú llamado Navigation Drawer. No hay buena documentación al respecto, pero no es complicado.
+El menú se abrirá con un icono de navegación configurado en la ToolBar desde los destinos de nivel superior (en los destinos internos, aparece en vez de ese icono el botón Up mencionado antes).
+
+Seguiremos [la guía de material correspondiente](https://github.com/material-components/material-components-android/blob/master/docs/components/NavigationDrawer.md#navigation-drawer) y el [apartado correspondiente de la guía Navigation Component](https://developer.android.com/guide/navigation/navigation-ui?hl=es-419#add_a_navigation_drawer)
+
+## 1. Cambios en el layout
+ - Añadiremos un icono de navegación, el que queramos, a nuestra ToolBar. Simplemente con el atributo ```app:navigationIcon="@drawable/mi_icono"```
+ - Debemos envolver todo el layout en el que tenemos nuestra ToolBar con otro layout contenedor: DrawerLayout. Y añadir al final un NavigationView. 
+   
+   ```xml
+   <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+       xmlns:tools="http://schemas.android.com/tools"
+       android:id="@+id/drawerLayout"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       tools:openDrawer="start">
+    
+      <!-- Aquí todo lo que teníamos. La barra, el nav_host... -->
+   
+      <com.google.android.material.navigation.NavigationView
+              android:id="@+id/nav_view"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_gravity="start"
+              app:menu="@menu/navigation_menu"
+              app:headerLayout="@layout/navdrawer_header"/>   
+      
+   </androidx.drawerlayout.widget.DrawerLayout>
+   ```
+   Dos cosas a destacar:
+ - El NavigationView apunta a otro menu.xml distinto. En este menú, cada opción se muestra siempre con icono y texto, y además, se genera una línea separada entre elementos group con ids distintos. Echad un ojo al menú enlazado.  
+ - En el NavigationView se hace referencia a un layout que hará de cabecera. No es obligatorio, pero
+   ahí podemos añadir el título de nuestra App, el icono, etc... para darle un toque distintivo.
+
+Tras ello, los cambios en el código del MainActivity son mínimos. Simplemente hay que tener en cuenta el Navigation Drawer al setear el appBarConfiguration.
+Se muestran en la imagen los cambios. A la derecha el código nuevo y a la izquierda el original (sólo con la ToolBar):
+
+![img.png](img.png)
+
+Si los ids del menú del Navigation drawer coinciden con los destinos del gráfico de navegación, el menú ya se gestionará automáticamente por dicho gráfico de navegación.
+
+
+
+Para finalizar, hay otros tipos de menús que podemos usar. Uno muy común es el [BottomAppBar](https://m3.material.io/components/bottom-app-bar/overview). Y también
+podemos generar [menús conextuales desplegables](https://m3.material.io/components/bottom-app-bar/overview) que se muestran al hacer click o dejar pulsada una vista.
+
+
+
+
+
+
+
  
 
 
